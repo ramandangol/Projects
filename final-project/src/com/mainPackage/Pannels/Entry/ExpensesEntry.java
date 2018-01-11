@@ -1,0 +1,1279 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mainPackage.Pannels.Entry;
+
+import com.mainPackage.MainProgram;
+import com.mainPackage.Pannels.Dashboard;
+import dao.BankDepositDao;
+import dao.BankLedgerDao;
+import dao.CashDepositDao;
+import dao.CashLedgerDao;
+import dao.ExpensesDao;
+import dao.TravelDao;
+import dao.staffledgerDao;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import model.BankDepositMode;
+import model.BankLedgerModel;
+import model.CashDepositModel;
+import model.CashLedgerModel;
+import model.DailyBookModel;
+import model.TravelExpensesDetailModel;
+import model.stafLedgerModel;
+
+/**
+ *
+ * @author Bladestorm
+ */
+public class ExpensesEntry extends javax.swing.JPanel {
+
+    /**
+     * Creates new form ExpensesEntry
+     */
+    //Expenses for daily book
+    ExpensesDao expdao = new ExpensesDao();
+    DailyBookModel dailybookmodel = new DailyBookModel();
+
+    BankDepositDao bankdepositdao = new BankDepositDao();
+    BankDepositMode bankdepositmodel = new BankDepositMode();
+
+    BankLedgerDao bankLedDao = new BankLedgerDao();
+    BankLedgerModel bankledgermodel = new BankLedgerModel();
+
+    staffledgerDao stafflddao = new staffledgerDao();
+    stafLedgerModel staffldmodel = new stafLedgerModel();
+
+    //Cash decrease and cash ledger
+    CashDepositModel cashdpmodel = new CashDepositModel();
+    CashDepositDao cashdpdao = new CashDepositDao();
+    CashLedgerModel cashledgermodel = new CashLedgerModel();
+    CashLedgerDao cashledgerdao = new CashLedgerDao();
+
+    //Expenses Details Table
+    TravelDao traveldao = new TravelDao();
+    TravelExpensesDetailModel traveldetailmodel = new TravelExpensesDetailModel();
+
+    Date nDate;
+
+    Date date = new Date();
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+    public ExpensesEntry() {
+        initComponents();
+        stafflddao.createTable();
+        traveldao.createTable();
+        //Expenses book 
+        expdao.createTable();
+        txtstaffdate.setText(dateFormat.format(date));
+        txtexpdate.setText(dateFormat.format(date));
+        txttravelDate.setText(dateFormat.format(date));
+
+        //Bank name list
+        List<String> blst = bankdepositdao.getBankname();
+        Iterator<String> ls = blst.iterator();
+        while (ls.hasNext()) {
+            txtstaffbankname.addItem(ls.next());
+        }
+
+        //Bank name list
+        List<String> blst1 = bankdepositdao.getBankname();
+        Iterator<String> lse = blst1.iterator();
+        while (lse.hasNext()) {
+            txtexpbakname.addItem(lse.next());
+        }
+        //Bank name list
+        List<String> blst2 = bankdepositdao.getBankname();
+        Iterator<String> lse1 = blst2.iterator();
+        while (lse1.hasNext()) {
+            txttravelBankName.addItem(lse1.next());
+        }
+
+        //staffnamelist
+        List<String> slst = stafflddao.getStaffname();
+        Iterator<String> ls1 = slst.iterator();
+        while (ls1.hasNext()) {
+            txtstaffname.addItem(ls1.next());
+        }
+
+    }
+
+    public Date getDate() {
+        String sdate = txtstaffdate.getText();
+        try {
+            /*final*/ nDate = dateFormat.parse(sdate);
+        } catch (ParseException dateexception) {
+            JOptionPane.showMessageDialog(null, "Please enter Date in the Format YYYY/MM/DD");
+        }
+        return nDate;
+    }
+
+    public Date getExpDate() {
+        String sdate = txtexpdate.getText();
+        try {
+            /*final*/ nDate = dateFormat.parse(sdate);
+        } catch (ParseException dateexception) {
+            JOptionPane.showMessageDialog(null, "Please enter Date in the Format YYYY/MM/DD");
+        }
+        return nDate;
+    }
+
+    public Date getTravelDate() {
+        String sdate = txttravelDate.getText();
+        try {
+            /*final*/ nDate = dateFormat.parse(sdate);
+        } catch (ParseException dateexception) {
+            JOptionPane.showMessageDialog(null, "Please enter Date in the Format YYYY/MM/DD");
+        }
+        return nDate;
+    }
+
+    public BigDecimal getTravelTotal() {
+        BigDecimal sum = new BigDecimal(0);
+        int rowcount = tblExpensesFor.getRowCount();
+        for (int i = 0; i < rowcount; i++) {
+            String amt = tblExpensesFor.getValueAt(i, 2).toString();
+            sum = sum.add(new BigDecimal(amt));
+        }
+        return sum;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtexpamount = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtexpparticular = new javax.swing.JTextField();
+        lblpaymente = new javax.swing.JLabel();
+        txtexpdate = new javax.swing.JTextField();
+        btnFactoryExp = new javax.swing.JButton();
+        rbtncashe = new javax.swing.JRadioButton();
+        rbtnchequee = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtexpbakname = new javax.swing.JComboBox<>();
+        lblpayment2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtstaffdate = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnStaffSubmit = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtstaffamount = new javax.swing.JTextField();
+        txtstaffparticular = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txtstaffname = new javax.swing.JComboBox<>();
+        rbtncash = new javax.swing.JRadioButton();
+        rbtncheque = new javax.swing.JRadioButton();
+        lblpayment = new javax.swing.JLabel();
+        txtstaffbankname = new javax.swing.JComboBox<>();
+        lblpayment1 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txttravelDate = new javax.swing.JTextField();
+        lblpaymentT = new javax.swing.JLabel();
+        rbtncashT = new javax.swing.JRadioButton();
+        rbtnchequeT = new javax.swing.JRadioButton();
+        lblpayment4 = new javax.swing.JLabel();
+        txttravelBankName = new javax.swing.JComboBox<>();
+        btnTravelSubmit = new javax.swing.JButton();
+        txttravelPlace = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txttravelAmount = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtForAmount = new javax.swing.JTextField();
+        tbnExpensesFor = new javax.swing.JButton();
+        txtFor = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblExpensesFor = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/goback.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel7.setText("For");
+
+        jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel8.setText("Date");
+
+        txtexpparticular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtexpparticularActionPerformed(evt);
+            }
+        });
+
+        lblpaymente.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+
+        btnFactoryExp.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnFactoryExp.setText("Submit");
+        btnFactoryExp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFactoryExpActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(rbtncashe);
+        rbtncashe.setText("Cash");
+        rbtncashe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtncasheActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(rbtnchequee);
+        rbtnchequee.setText("Cheque");
+        rbtnchequee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnchequeeActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel10.setText("Amount");
+
+        txtexpbakname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtexpbaknameActionPerformed(evt);
+            }
+        });
+
+        lblpayment2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblpayment2.setText("Bank Name");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 184, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblpayment2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblpaymente, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtexpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtexpparticular, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtexpamount, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rbtncashe)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtnchequee))
+                    .addComponent(txtexpbakname, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(483, 483, 483))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(451, 451, 451)
+                .addComponent(btnFactoryExp, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtexpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtexpparticular, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtexpamount, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbtncashe)
+                    .addComponent(rbtnchequee)
+                    .addComponent(lblpaymente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtexpbakname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblpayment2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(btnFactoryExp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Factory Expenses", jPanel1);
+
+        jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel3.setText("Date");
+
+        txtstaffdate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtstaffdateFocusLost(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel4.setText("Staff Name");
+
+        btnStaffSubmit.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnStaffSubmit.setText("Submit");
+        btnStaffSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStaffSubmitActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel5.setText("Amount");
+
+        txtstaffamount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstaffamountActionPerformed(evt);
+            }
+        });
+
+        txtstaffparticular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Advance", "Salary" }));
+        txtstaffparticular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstaffparticularActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel6.setText("Particular");
+
+        txtstaffname.setEditable(true);
+        txtstaffname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstaffnameActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rbtncash);
+        rbtncash.setText("Cash");
+        rbtncash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtncashActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rbtncheque);
+        rbtncheque.setText("Cheque");
+        rbtncheque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnchequeActionPerformed(evt);
+            }
+        });
+
+        lblpayment.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+
+        txtstaffbankname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstaffbanknameActionPerformed(evt);
+            }
+        });
+
+        lblpayment1.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblpayment1.setText("Bank Name");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(btnStaffSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblpayment, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbtncash)
+                                .addGap(26, 26, 26)
+                                .addComponent(rbtncheque)
+                                .addGap(64, 64, 64))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblpayment1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(txtstaffbankname, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtstaffamount, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtstaffparticular, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtstaffname, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(13, 13, 13)
+                                    .addComponent(txtstaffdate, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(557, 747, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtstaffdate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtstaffname, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtstaffparticular, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtstaffamount, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbtncash)
+                        .addComponent(rbtncheque))
+                    .addComponent(lblpayment, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtstaffbankname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblpayment1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(btnStaffSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
+
+        jTabbedPane1.addTab("Staff Expenses", jPanel2);
+
+        jLabel9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel9.setText("Date");
+
+        txttravelDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txttravelDateFocusLost(evt);
+            }
+        });
+
+        lblpaymentT.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+
+        buttonGroup3.add(rbtncashT);
+        rbtncashT.setText("Cash");
+        rbtncashT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtncashTActionPerformed(evt);
+            }
+        });
+
+        buttonGroup3.add(rbtnchequeT);
+        rbtnchequeT.setText("Cheque");
+        rbtnchequeT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnchequeTActionPerformed(evt);
+            }
+        });
+
+        lblpayment4.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblpayment4.setText("Bank Name");
+
+        txttravelBankName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttravelBankNameActionPerformed(evt);
+            }
+        });
+
+        btnTravelSubmit.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnTravelSubmit.setText("Submit");
+        btnTravelSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTravelSubmitActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel11.setText("Place");
+
+        jLabel12.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel12.setText("Amount");
+
+        txttravelAmount.setEditable(false);
+
+        jLabel13.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel13.setText("For");
+
+        tbnExpensesFor.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        tbnExpensesFor.setText("Add");
+        tbnExpensesFor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnExpensesForActionPerformed(evt);
+            }
+        });
+
+        txtFor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lodge", "Food", "Travel Charge", "Fuel" }));
+
+        tblExpensesFor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "S.N", "Expenses for", "Amount"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblExpensesFor);
+        if (tblExpensesFor.getColumnModel().getColumnCount() > 0) {
+            tblExpensesFor.getColumnModel().getColumn(0).setResizable(false);
+            tblExpensesFor.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblExpensesFor.getColumnModel().getColumn(1).setResizable(false);
+            tblExpensesFor.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblExpensesFor.getColumnModel().getColumn(2).setResizable(false);
+            tblExpensesFor.getColumnModel().getColumn(2).setPreferredWidth(100);
+        }
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lblpayment4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(txttravelBankName, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(txttravelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(txttravelPlace, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(txttravelAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lblpaymentT, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(rbtncashT)
+                                .addGap(26, 26, 26)
+                                .addComponent(rbtnchequeT))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(btnTravelSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFor, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtForAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tbnExpensesFor, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(34, 34, 34))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txttravelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtForAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tbnExpensesFor)
+                            .addComponent(txtFor, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txttravelPlace, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(110, 110, 110)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txttravelAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(rbtncashT)
+                                .addComponent(rbtnchequeT))
+                            .addComponent(lblpaymentT, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txttravelBankName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblpayment4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(btnTravelSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Travel Expenses", jPanel5);
+
+        jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel2.setText("Expenses");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        MainProgram.mainframe.mainPane.remove(this);
+        MainProgram.mainframe.mainPane.add(new Dashboard());
+        SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void btnFactoryExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFactoryExpActionPerformed
+        // TODO add your handling code here:
+        String name = "Cash Deposit";
+        String sdate = txtexpdate.getText();
+        String sparticular = txtexpparticular.getText();
+        String sAmount = txtexpamount.getText();
+        String spayment = lblpaymente.getText();
+        Object obankname = txtexpbakname.getSelectedItem();
+        String sbankname = obankname.toString();
+        if (sdate.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Date is Empty !!");
+        } else if (!sdate.matches("[0-9/_]+")) {
+            JOptionPane.showMessageDialog(null, "Date not valid");
+        } else if (!sdate.matches("\\d{4}/\\d{1,2}/\\d{1,2}")) {
+            JOptionPane.showMessageDialog(null, "Date not valid date should be YYYY/MM/DD");
+        } else if (sparticular.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Enter particular !!");
+        } else if (sAmount.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Amount is Empty !!");
+        } else if (!sAmount.matches("[0-9_]+")) {
+            JOptionPane.showMessageDialog(null, "Amount not valid enter numbers !!");
+        } else if (spayment.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select Payment style");
+        } else if (spayment.equalsIgnoreCase("Cheque")) {
+            if (sbankname.isEmpty()) {
+
+            } else if (!bankdepositdao.balanceCheck(sbankname, new BigDecimal(sAmount))) {
+                JOptionPane.showMessageDialog(null, "You don't have sufficient balance to paid by " + sbankname);
+            } else {
+                if (JOptionPane.showConfirmDialog(null, "Are you sure want to entry ", "Expenses Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    //BankBalance
+                    bankdepositmodel.setBankname(sbankname);
+                    bankdepositmodel.setAmount(new BigDecimal(sAmount));
+                    bankdepositdao.bankAmountDecrese(bankdepositmodel);
+
+                    //Bankbalance entry ledger
+                    bankledgermodel.setDate(getExpDate());
+                    bankledgermodel.setBankname(sbankname);
+                    bankledgermodel.setParticular("Factory Expenses");
+                    bankledgermodel.setDebit(new BigDecimal(sAmount));
+                    bankledgermodel.setCredit(new BigDecimal(0));
+                    bankLedDao.insert(bankledgermodel);
+
+                    //Expense book
+                    dailybookmodel.setDate(getExpDate());
+                    dailybookmodel.setParticular("Fac. exp. " + sparticular + " by Cheque " + sbankname);
+                    dailybookmodel.setAmount(new BigDecimal(sAmount));
+                    expdao.insertExpen(dailybookmodel);
+                    JOptionPane.showMessageDialog(null, "Record entry successfully with cheque");
+                    MainProgram.mainframe.mainPane.remove(this);
+                    MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                    SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Record not entry");
+                }
+            }
+
+        } else if (!cashdpdao.cashCheck(name, new BigDecimal(sAmount))) {
+            JOptionPane.showMessageDialog(null, "You don't have sufficent balance !!");
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "Are you sure want to entry ", "Expenses Entry", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                cashdpmodel.setParticular("Cash Deposit");
+                cashdpmodel.setCash(new BigDecimal(sAmount));
+                cashdpdao.cashDecrease(cashdpmodel);
+
+                cashledgermodel.setDate(getDate());
+                cashledgermodel.setParticular("Factory Expenses");
+                cashledgermodel.setDebit(new BigDecimal(sAmount));
+                cashledgermodel.setCredit(new BigDecimal(0));
+                cashledgerdao.insert(cashledgermodel);
+
+                //Expense book
+                dailybookmodel.setDate(getExpDate());
+                dailybookmodel.setParticular("Fac. exp. " + sparticular + " by Cash");
+                dailybookmodel.setAmount(new BigDecimal(sAmount));
+                expdao.insertExpen(dailybookmodel);
+
+                MainProgram.mainframe.mainPane.remove(this);
+                MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+
+                JOptionPane.showMessageDialog(null, "Record entry successfully with Cash");
+            } else {
+                JOptionPane.showMessageDialog(null, "Record not entry");
+            }
+
+        }
+    }//GEN-LAST:event_btnFactoryExpActionPerformed
+
+    private void btnStaffSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStaffSubmitActionPerformed
+        // TODO add your handling code here:
+        String sDate = txtstaffdate.getText();
+        Object ostaffname = txtstaffname.getSelectedItem();
+        String sstaffname = ostaffname.toString();
+        Object ostaffparticular = txtstaffparticular.getSelectedItem();
+        String sstaffparticular = ostaffparticular.toString();
+        String sstaffamount = txtstaffamount.getText();
+        String sstaffpayment = lblpayment.getText();
+        Object obankname = txtstaffbankname.getSelectedItem();
+        String sbankname = obankname.toString();
+
+        if (sDate.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Date is Empty !!");
+        } else if (!sDate.matches("[0-9/_]+")) {
+            JOptionPane.showMessageDialog(null, "Date not valid");
+        } else if (!sDate.matches("\\d{4}/\\d{1,2}/\\d{1,2}")) {
+            JOptionPane.showMessageDialog(null, "Date not valid date should be YYYY/MM/DD");
+        } else if (sstaffname.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Staff name is Empty");
+        } else if (sstaffparticular.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Particular  is Empty");
+        } else if (sstaffamount.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Amount is Empty");
+        } else if (sstaffpayment.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select Payment Style");
+        } else if (sstaffpayment.equalsIgnoreCase("Cheque")) {
+            Object ostaffbankname = txtstaffbankname.getSelectedItem();
+            String sstaffbankname = ostaffbankname.toString();
+            if (sstaffbankname.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "select bank name");
+            } else if (!bankdepositdao.balanceCheck(sbankname, new BigDecimal(sstaffamount))) {
+                JOptionPane.showMessageDialog(null, "You don't have sufficient balance to paid by " + sbankname);
+            } else {
+                if (JOptionPane.showConfirmDialog(null, "Are you sure want to pay !!" + "\n Date:- " + sDate + "\n Staff Name :-" + sstaffname + "\n Amount :-" + sstaffamount + "\n Paid by " + sstaffpayment, "Payment", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    //code
+                    staffldmodel.setDate(getDate());
+                    staffldmodel.setStaffname(sstaffname);
+                    staffldmodel.setParticular(sstaffparticular + " by " + sstaffpayment);
+                    staffldmodel.setDebit(new BigDecimal(sstaffamount));
+                    staffldmodel.setCredit(new BigDecimal(0));
+                    stafflddao.insert(staffldmodel);
+
+                    //BankBalance
+                    bankdepositmodel.setBankname(sbankname);
+                    bankdepositmodel.setAmount(new BigDecimal(sstaffamount));
+                    bankdepositdao.bankAmountDecrese(bankdepositmodel);
+
+                    //Bankbalance entry ledger
+                    bankledgermodel.setDate(getDate());
+                    bankledgermodel.setBankname(sbankname);
+                    bankledgermodel.setParticular("Staff Salary");
+                    bankledgermodel.setDebit(new BigDecimal(sstaffamount));
+                    bankledgermodel.setCredit(new BigDecimal(0));
+                    bankLedDao.insert(bankledgermodel);
+
+                    //Expense book
+                    dailybookmodel.setDate(getDate());
+                    dailybookmodel.setParticular("Staff. exp. " + sstaffparticular + " by Cheque " + sbankname);
+                    dailybookmodel.setAmount(new BigDecimal(sstaffamount));
+                    expdao.insertExpen(dailybookmodel);
+
+                    JOptionPane.showMessageDialog(null, "success with bank");
+                    MainProgram.mainframe.mainPane.remove(this);
+                    MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                    SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Payment cancelled !!!");
+                }
+            }
+        } else if (!cashdpdao.cashCheck("Cash Deposit", new BigDecimal(sstaffamount))) {
+            JOptionPane.showMessageDialog(null, "You don't have sufficent balance !!");
+        } else {
+            //code
+            if (JOptionPane.showConfirmDialog(null, "Are you sure want to pay !!" + "\n Date:- " + sDate + "\n Staff Name :-" + sstaffname + "\n Amount :-" + sstaffamount + "\n Paid by " + sstaffpayment, "Payment", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                //code
+                staffldmodel.setDate(getDate());
+                staffldmodel.setStaffname(sstaffname);
+                staffldmodel.setParticular(sstaffparticular + " by " + sstaffpayment);
+                staffldmodel.setDebit(new BigDecimal(sstaffamount));
+                staffldmodel.setCredit(new BigDecimal(0));
+                stafflddao.insert(staffldmodel);
+
+                cashdpmodel.setParticular("Cash Deposit");
+                cashdpmodel.setCash(new BigDecimal(sstaffamount));
+                cashdpdao.cashDecrease(cashdpmodel);
+
+                cashledgermodel.setDate(getDate());
+                cashledgermodel.setParticular("Staff Payment");
+                cashledgermodel.setDebit(new BigDecimal(sstaffamount));
+                cashledgermodel.setCredit(new BigDecimal(0));
+                cashledgerdao.insert(cashledgermodel);
+                JOptionPane.showMessageDialog(null, "success with cash");
+
+                //Expense book
+                dailybookmodel.setDate(getDate());
+                dailybookmodel.setParticular("Staff. exp. " + sstaffparticular + " by Cash");
+                dailybookmodel.setAmount(new BigDecimal(sstaffamount));
+                expdao.insertExpen(dailybookmodel);
+
+                MainProgram.mainframe.mainPane.remove(this);
+                MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+            } else {
+                JOptionPane.showMessageDialog(null, "Payment cancelled !!!");
+            }
+        }
+
+    }//GEN-LAST:event_btnStaffSubmitActionPerformed
+
+    private void txtstaffparticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstaffparticularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstaffparticularActionPerformed
+
+    private void txtstaffamountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstaffamountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstaffamountActionPerformed
+
+    private void txtstaffnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstaffnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstaffnameActionPerformed
+
+    private void txtstaffbanknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstaffbanknameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstaffbanknameActionPerformed
+
+    private void rbtncashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtncashActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtncheque.setActionCommand("Cheque");
+        rbtncash.setActionCommand("Cash");
+        if (buttonGroup1.getSelection().getActionCommand().equals(rbtncheque.getActionCommand())) {
+            lblpayment.setText(rbtncheque.getActionCommand());
+            pay = lblpayment.getText();
+        } else if (buttonGroup1.getSelection().getActionCommand().equals(rbtncash.getActionCommand())) {
+            lblpayment.setText(rbtncash.getActionCommand());
+            pay = lblpayment.getText();
+
+        }
+    }//GEN-LAST:event_rbtncashActionPerformed
+
+    private void rbtnchequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnchequeActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtncheque.setActionCommand("Cheque");
+        rbtncash.setActionCommand("Cash");
+        if (buttonGroup1.getSelection().getActionCommand().equals(rbtncheque.getActionCommand())) {
+            lblpayment.setText(rbtncheque.getActionCommand());
+            pay = lblpayment.getText();
+        } else if (buttonGroup1.getSelection().getActionCommand().equals(rbtncash.getActionCommand())) {
+            lblpayment.setText(rbtncash.getActionCommand());
+            pay = lblpayment.getText();
+
+        }
+    }//GEN-LAST:event_rbtnchequeActionPerformed
+
+    private void txtstaffdateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtstaffdateFocusLost
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtstaffdateFocusLost
+
+    private void txtexpparticularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtexpparticularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtexpparticularActionPerformed
+
+    private void rbtncasheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtncasheActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtnchequee.setActionCommand("Cheque");
+        rbtncashe.setActionCommand("Cash");
+        if (buttonGroup2.getSelection().getActionCommand().equals(rbtnchequee.getActionCommand())) {
+            lblpaymente.setText(rbtnchequee.getActionCommand());
+            pay = lblpaymente.getText();
+        } else if (buttonGroup2.getSelection().getActionCommand().equals(rbtncashe.getActionCommand())) {
+            lblpaymente.setText(rbtncashe.getActionCommand());
+            pay = lblpaymente.getText();
+
+        }
+    }//GEN-LAST:event_rbtncasheActionPerformed
+
+    private void rbtnchequeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnchequeeActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtnchequee.setActionCommand("Cheque");
+        rbtncashe.setActionCommand("Cash");
+        if (buttonGroup2.getSelection().getActionCommand().equals(rbtnchequee.getActionCommand())) {
+            lblpaymente.setText(rbtnchequee.getActionCommand());
+            pay = lblpaymente.getText();
+        } else if (buttonGroup2.getSelection().getActionCommand().equals(rbtncashe.getActionCommand())) {
+            lblpaymente.setText(rbtncashe.getActionCommand());
+            pay = lblpaymente.getText();
+
+        }
+    }//GEN-LAST:event_rbtnchequeeActionPerformed
+
+    private void txtexpbaknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtexpbaknameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtexpbaknameActionPerformed
+
+    private void txttravelDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txttravelDateFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttravelDateFocusLost
+
+    private void rbtncashTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtncashTActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtnchequeT.setActionCommand("Cheque");
+        rbtncashT.setActionCommand("Cash");
+        if (buttonGroup3.getSelection().getActionCommand().equals(rbtnchequeT.getActionCommand())) {
+            lblpaymentT.setText(rbtnchequeT.getActionCommand());
+            pay = lblpaymentT.getText();
+        } else if (buttonGroup3.getSelection().getActionCommand().equals(rbtncashT.getActionCommand())) {
+            lblpaymentT.setText(rbtncashT.getActionCommand());
+            pay = lblpaymentT.getText();
+
+        }
+    }//GEN-LAST:event_rbtncashTActionPerformed
+
+    private void rbtnchequeTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnchequeTActionPerformed
+        // TODO add your handling code here:
+        String pay;
+        rbtnchequeT.setActionCommand("Cheque");
+        rbtncashT.setActionCommand("Cash");
+        if (buttonGroup3.getSelection().getActionCommand().equals(rbtnchequeT.getActionCommand())) {
+            lblpaymentT.setText(rbtnchequeT.getActionCommand());
+            pay = lblpaymentT.getText();
+        } else if (buttonGroup3.getSelection().getActionCommand().equals(rbtncashT.getActionCommand())) {
+            lblpaymentT.setText(rbtncashT.getActionCommand());
+            pay = lblpaymentT.getText();
+
+        }
+
+    }//GEN-LAST:event_rbtnchequeTActionPerformed
+
+    private void txttravelBankNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttravelBankNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttravelBankNameActionPerformed
+
+    private void btnTravelSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTravelSubmitActionPerformed
+        // TODO add your handling code here:
+        String straveldate = txttravelDate.getText();
+        String strvelplace = txttravelPlace.getText();
+        String stravelamount = txttravelAmount.getText();
+        String stravelpayment = lblpaymentT.getText();
+
+        if (straveldate.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Date is Empty !!");
+        } else if (!straveldate.matches("[0-9/_]+")) {
+            JOptionPane.showMessageDialog(null, "Date not valid");
+        } else if (!straveldate.matches("\\d{4}/\\d{1,2}/\\d{1,2}")) {
+            JOptionPane.showMessageDialog(null, "Date not valid date should be YYYY/MM/DD");
+        } else if (strvelplace.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Place is Empty !!");
+        } else if (stravelamount.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Amount is Empty, First fill the expenses details !!");
+        } else if (!stravelamount.matches("[0-9._]+")) {
+            JOptionPane.showMessageDialog(null, "Amount not valid Enter digits !!");
+        } else if (stravelpayment.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Select payment style !!");
+        } else if (stravelpayment.equalsIgnoreCase("Cheque")) {
+            Object obankname = txttravelBankName.getSelectedItem();
+            String sbankname = obankname.toString();
+
+            if (sbankname.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Bank name is Empty");
+            } else if (!bankdepositdao.balanceCheck(sbankname, new BigDecimal(stravelamount))) {
+                JOptionPane.showMessageDialog(null, "You don't have sufficent balance in " + sbankname);
+            } else {
+                if (JOptionPane.showConfirmDialog(null, "Are you sure want to insert record !!", "Factory Expenses", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    //BankBalance
+                    bankdepositmodel.setBankname(sbankname);
+                    bankdepositmodel.setAmount(new BigDecimal(stravelamount));
+                    bankdepositdao.bankAmountDecrese(bankdepositmodel);
+
+                    //Bankbalance entry ledger
+                    bankledgermodel.setDate(getTravelDate());
+                    bankledgermodel.setBankname(sbankname);
+                    bankledgermodel.setParticular("Travel Expenses");
+                    bankledgermodel.setDebit(new BigDecimal(stravelamount));
+                    bankledgermodel.setCredit(new BigDecimal(0));
+                    bankLedDao.insert(bankledgermodel);
+
+                    //Expense book
+                    dailybookmodel.setDate(getTravelDate());
+                    dailybookmodel.setParticular("Tv. exp. " + strvelplace + " by Cheque " + sbankname);
+                    dailybookmodel.setAmount(new BigDecimal(stravelamount));
+                    expdao.insertExpen(dailybookmodel);
+
+                    int rowcount = tblExpensesFor.getRowCount();
+                    for (int row = 0; row < rowcount; row++) {
+                        String sexpensesfor = (String) tblExpensesFor.getValueAt(row, 1);
+                        String samount = (String) tblExpensesFor.getValueAt(row, 2);
+                        BigDecimal db_amount = new BigDecimal(samount);
+
+                        traveldetailmodel.setDate(getTravelDate());
+                        traveldetailmodel.setPlacename(strvelplace);
+                        traveldetailmodel.setExpensesFor(sexpensesfor);
+                        traveldetailmodel.setAmount(db_amount);
+                        traveldao.insert(traveldetailmodel);
+                        System.out.println(sexpensesfor);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Record entry successfully with cheque");
+                    MainProgram.mainframe.mainPane.remove(this);
+                    MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                    SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cancelled !!");
+                }
+            }
+
+        } else if (!cashdpdao.cashCheck("Cash Deposit", new BigDecimal(stravelamount))) {
+            JOptionPane.showMessageDialog(null, "you don't have sufficent amount !!");
+        } else {
+            //code
+
+            if (JOptionPane.showConfirmDialog(null, "Are you sure want to insert record !!", "Factory Expenses", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                cashdpmodel.setParticular("Cash Deposit");
+                cashdpmodel.setCash(new BigDecimal(stravelamount));
+                cashdpdao.cashDecrease(cashdpmodel);
+
+                cashledgermodel.setDate(getTravelDate());
+                cashledgermodel.setParticular("Travel Expenses");
+                cashledgermodel.setDebit(new BigDecimal(stravelamount));
+                cashledgermodel.setCredit(new BigDecimal(0));
+                cashledgerdao.insert(cashledgermodel);
+
+                //Expense book
+                dailybookmodel.setDate(getTravelDate());
+                dailybookmodel.setParticular("Tv. exp. " + strvelplace + " by Cash");
+                dailybookmodel.setAmount(new BigDecimal(stravelamount));
+                expdao.insertExpen(dailybookmodel);
+                
+                
+                 int rowcount = tblExpensesFor.getRowCount();
+                    for (int row = 0; row < rowcount; row++) {
+                        String sexpensesfor = (String) tblExpensesFor.getValueAt(row, 1);
+                        String samount = (String) tblExpensesFor.getValueAt(row, 2);
+                        BigDecimal db_amount = new BigDecimal(samount);
+
+                        traveldetailmodel.setDate(getTravelDate());
+                        traveldetailmodel.setPlacename(strvelplace);
+                        traveldetailmodel.setExpensesFor(sexpensesfor);
+                        traveldetailmodel.setAmount(db_amount);
+                        traveldao.insert(traveldetailmodel);
+                    }
+
+                JOptionPane.showMessageDialog(null, "Record insert with cash !!");
+                MainProgram.mainframe.mainPane.remove(this);
+                MainProgram.mainframe.mainPane.add(new ExpensesEntry());
+                SwingUtilities.updateComponentTreeUI(MainProgram.mainframe.mainPane);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancelled !!");
+            }
+        }
+
+
+    }//GEN-LAST:event_btnTravelSubmitActionPerformed
+
+    private void tbnExpensesForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnExpensesForActionPerformed
+        // TODO add your handling code here:
+        Object ofor = txtFor.getSelectedItem();
+        String sfor = ofor.toString();
+        String sExpensesAmount = txtForAmount.getText();
+        if (sfor.isEmpty()) {
+
+        } else if (sExpensesAmount.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Amount is Empty !1");
+        } else if (!sExpensesAmount.matches("[0-9._]+")) {
+            JOptionPane.showMessageDialog(null, "Amount not valid !!");
+        } else {
+            DefaultTableModel model = (DefaultTableModel) tblExpensesFor.getModel();
+            Object[] data = new Object[3];
+            int i = 1;
+            data[0] = i + tblExpensesFor.getRowCount();
+            data[1] = sfor;
+            data[2] = sExpensesAmount;
+            model.addRow(data);
+
+            txttravelAmount.setText(getTravelTotal().toString());
+        }
+    }//GEN-LAST:event_tbnExpensesForActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFactoryExp;
+    private javax.swing.JButton btnStaffSubmit;
+    private javax.swing.JButton btnTravelSubmit;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblpayment;
+    private javax.swing.JLabel lblpayment1;
+    private javax.swing.JLabel lblpayment2;
+    private javax.swing.JLabel lblpayment4;
+    private javax.swing.JLabel lblpaymentT;
+    private javax.swing.JLabel lblpaymente;
+    private javax.swing.JRadioButton rbtncash;
+    private javax.swing.JRadioButton rbtncashT;
+    private javax.swing.JRadioButton rbtncashe;
+    private javax.swing.JRadioButton rbtncheque;
+    private javax.swing.JRadioButton rbtnchequeT;
+    private javax.swing.JRadioButton rbtnchequee;
+    private javax.swing.JTable tblExpensesFor;
+    private javax.swing.JButton tbnExpensesFor;
+    private javax.swing.JComboBox<String> txtFor;
+    private javax.swing.JTextField txtForAmount;
+    private javax.swing.JTextField txtexpamount;
+    private javax.swing.JComboBox<String> txtexpbakname;
+    private javax.swing.JTextField txtexpdate;
+    private javax.swing.JTextField txtexpparticular;
+    private javax.swing.JTextField txtstaffamount;
+    private javax.swing.JComboBox<String> txtstaffbankname;
+    private javax.swing.JTextField txtstaffdate;
+    private javax.swing.JComboBox<String> txtstaffname;
+    private javax.swing.JComboBox<String> txtstaffparticular;
+    private javax.swing.JTextField txttravelAmount;
+    private javax.swing.JComboBox<String> txttravelBankName;
+    private javax.swing.JTextField txttravelDate;
+    private javax.swing.JTextField txttravelPlace;
+    // End of variables declaration//GEN-END:variables
+}

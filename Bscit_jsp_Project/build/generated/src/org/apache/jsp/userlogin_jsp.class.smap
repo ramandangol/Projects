@@ -1,0 +1,24 @@
+SMAP
+userlogin_jsp.java
+JSP
+*S JSP
+*F
++ 0 userlogin.jsp
+userlogin.jsp
++ 1 navigation_menu.jsp
+navigation_menu.jsp
+*L
+5,12:59
+17,5:72
+21,2:77
+5#1,9:79
+13:196,5
+13,2:90
+14:214,5
+14,2:94
+15:232,5
+15,22:98
+22#0,45:119
+67,4:165
+70,10:169
+*E
