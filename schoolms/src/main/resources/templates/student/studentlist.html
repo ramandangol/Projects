@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='student details')">
+</head>
+<body>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+
+
+            <form action="#" th:action="@{/student/liststudent}"
+                  th:object="${student}" method="post">
+                <div class="row">
+                    <div class="col-sm-2 form-group">
+                        <label>Batch Year</label>
+                        <select class="form-control" id="batchYear" name="batchYear">
+                            <option th:each="btchName: ${student.batchYears}"
+                                    th:value="${btchName}"
+                                    th:text="${btchName}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Grade</label>
+                        <select class="form-control" id="gradeId" name="gradeId"
+                                th:field="*{grade.id}">
+                            <option th:each="grdName: ${grades}"
+                                    th:value="${grdName.id}"
+                                    th:text="${grdName.gradeName}+ '  ' + ${grdName.gradeSection}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label></label>
+                        <input type="Submit" class="btn btn-lg btn-success form-control" value="Go"/>
+                    </div>
+                </div>
+            </form>
+            <h5 th:text="${btchyr}"></h5>
+
+            <table class="table table-striped  table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>S/No.</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Grade</th>
+                    <th>Gender</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tr th:each="std,iterator : ${students}">
+                    <td th:text="${iterator.count}">1</td>
+                    <td th:text="${std.firstname}">Raman</td>
+                    <td th:text="${std.lastname}">Dangol</td>
+                    <td th:text="${std.grade.gradeName} + '  ' + ${std.grade.gradeSection}">Lalitpur</td>
+                    <td th:text="${std.gender}">Gender</td>
+                    <td>
+                        <a class="btn btn-primary center-block" href="#" th:href="@{${'/student/studentdtl/edit/' + std.id}}">Edit</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger center-block"  type="button" href="#" th:data-href="@{${'/student/studentdtl/delete/' + std.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+                        <!-- Modal HTML -->
+                        <div id="confirm-delete" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="icon-box">
+                                            <i class="material-icons">&#xE5CD;</i>
+                                        </div>
+                                        <h4 class="modal-title">Are you sure?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                        <a class="btn btn-danger btn-ok">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<script th:inline="javascript">
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+</script>
+</body>
+</html>

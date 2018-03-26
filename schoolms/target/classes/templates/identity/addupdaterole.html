@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+    <head th:replace="fragments/header::header (pageTitle='Role')">
+    </head>
+
+    <body>
+    <div class="wrapper">
+        <!--Sidebar Holder-->
+        <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+            <div th:replace="fragments/topmenu::topmenu"></div>
+
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        Add Role
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="#" th:action="@{/identity/role}"
+                              th:object="${role}" method="post">
+
+                            <input id="id" name="id" type="hidden" th:value="${role.id}">
+
+                            <div class="form-group">
+                                <label for="name">Role Name: </label>
+                                <input id="name" name="name" type="text"
+                                       th:value="${role.name}" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Role Description: </label>
+                                <input id="description" name="description" type="text"
+                                       th:value="${role.description}" class="form-control">
+                            </div>
+
+                            <input type="submit" value="Save" class="btn btn-primary"/>
+                            <input type="reset" value="Reset" class="btn btn-secondary"/>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+    <footer th:replace="fragments/footer::footer"></footer>
+    </body>
+</html>

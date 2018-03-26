@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='Role List')">
+</head>
+
+<body>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+
+            <div class="col-sm-4">
+                <input id="myInput" onkeyup="myFunction()" class="form-control" type="text" placeholder="Search for role list" >
+            </div><br/>
+            <h3>Role List</h3>
+
+            <table class="table table-bordered table-striped" id="myTable">
+                <tr>
+                    <th>S/No.</th>
+                    <th>Role Name</th>
+                    <th>Role Description</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                <tr th:each="role,iterator : ${roles}">
+                    <td th:text="${iterator.count}">1</td>
+                    <td th:text="${role.name}">User_List</td>
+                    <td th:text="${role.description}">User Listing Page</td>
+                    <td>
+                        <a class="btn btn-primary center-block" href="#" th:href="@{${'/identity/role/edit/' + role.id}}">Edit</a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger center-block" href="#" th:data-href="@{${'/identity/role/delete/' + role.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+                        <!-- Modal HTML -->
+                        <div id="confirm-delete" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="icon-box">
+                                            <i class="material-icons">&#xE5CD;</i>
+                                        </div>
+                                        <h4 class="modal-title">Are you sure?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                        <a class="btn btn-danger btn-ok">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<script th:inline="javascript">
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='Welcome to the NIIT Spring Boot SMS Site')">
+</head>
+<body>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+            <h2>Access Denied</h2>
+
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

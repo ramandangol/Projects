@@ -1,0 +1,121 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+     th:fragment="sidemenu">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>School Management System</h3>
+            <strong>SMS</strong>
+        </div>
+
+        <ul class="list-unstyled components" sec:authorize="isAuthenticated()">
+            <li class="active">
+                <a href="#" th:href="@{/identity/dashboard}">
+                    <i class="glyphicon glyphicon-home"></i>
+                    Home
+                </a>
+            </li>
+            <li sec:authorize="hasAnyAuthority('Teacher_Add','Teacher_List')">
+                <a href="#teacherSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Teacher
+                </a>
+                <ul class="collapse list-unstyled" id="teacherSubmenu">
+                    <li><a href="#" th:href="@{/teacher/listteacher}"
+                    sec:authorize="hasAuthority('Teacher_List')">Teacher List</a></li>
+                    <li><a href="#" th:href="@{/teacher/teacherdtl}"
+                    sec:authorize="hasAuthority('Teacher_Add')">Create Teacher</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Course_Add','Course_List')">
+                <a href="#courseSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-book"></i>
+                    Course
+                </a>
+                <ul class="collapse list-unstyled" id="courseSubmenu">
+                    <li><a href="#" th:href="@{/course/listcourse}"
+                           sec:authorize="hasAuthority('Course_List')">Course List</a></li>
+                    <li><a href="#" th:href="@{/course/coursedetails}"
+                           sec:authorize="hasAuthority('Course_Add')">Create Course</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Grade_Add','Grade_List')">
+                <a href="#gradeSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    Grade
+                </a>
+                <ul class="collapse list-unstyled" id="gradeSubmenu">
+                    <li><a href="#" th:href="@{/grade/listgrade}"
+                           sec:authorize="hasAuthority('Grade_List')">Grade List</a></li>
+                    <li><a href="#" th:href="@{/grade/gradedetails}"
+                           sec:authorize="hasAuthority('Grade_Add')">Add Grades</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Student_Add','Student_List')">
+                <a href="#studentSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    Student
+                </a>
+                <ul class="collapse list-unstyled" id="studentSubmenu">
+                    <li><a href="#" th:href="@{/student/liststudent}"
+                           sec:authorize="hasAuthority('Student_List')">Student List</a></li>
+                    <li><a href="#" th:href="@{/student/studentdtl}"
+                           sec:authorize="hasAuthority('Student_Add')">Add Student</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Exam_Add','Exam_List')">
+                <a href="#examSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    Exam
+                </a>
+                <ul class="collapse list-unstyled" id="examSubmenu">
+                    <li><a href="#" th:href="@{/exam/listexam}"
+                           sec:authorize="hasAnyAuthority('Exam_List','Exam_Add')">Exam Type</a></li>
+                    <li><a href="#" th:href="@{/exam/listexamdate}"
+                           sec:authorize="hasAnyAuthority('Examdate_Add','Examdate_list')">Exam Date</a></li>
+                    <li><a href="#" th:href="@{/exam/marks}">Manage Marks</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('User_Add','User_List')">
+                <a href="#UserSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-plus-sign"></i>
+                    User
+                </a>
+                <ul class="collapse list-unstyled" id="UserSubmenu">
+                    <li><a href="#" th:href="@{/identity/listuser}"
+                           sec:authorize="hasAuthority('User_List')">User List</a></li>
+                    <li><a href="#" th:href="@{/identity/user}"
+                           sec:authorize="hasAuthority('User_Add')">Add User</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Role_Add','Role_List')">
+                <a href="#RoleSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-paperclip"></i>
+                    Role
+                </a>
+                <ul class="collapse list-unstyled" id="RoleSubmenu">
+                    <li><a href="#" th:href="@{/identity/listrole}"
+                           sec:authorize="hasAuthority('Role_List')">Role List</a></li>
+                    <li><a href="#" th:href="@{/identity/role}"
+                           sec:authorize="hasAuthority('Role_Add')">Add Role</a></li>
+                </ul>
+            </li>
+
+            <li sec:authorize="hasAnyAuthority('Attendance_List')">
+                <a href="#" th:href="@{/student/attendance}"
+                sec:authorize="hasAuthority('Attendance_List')">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                   Attendance
+                </a>
+            </li>
+
+
+        </ul>
+
+    </nav>
+</div>

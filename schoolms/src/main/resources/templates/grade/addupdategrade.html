@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='grade Add/Update')">
+</head>
+<body>
+<style>
+    .input-group-addon{color:#282525; background-color: #969191;font-size: 20px;}
+</style>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                   <h1 th:text="${msg}">Add/Update Grade</h1>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/grade/gradedetails}" method="post"
+                          th:object="${grades}">
+                        <input id="id" name="id" type="hidden" th:value="${grades.id}">
+                        <div class="form-group row">
+                            <label for="gradeName" class="col-sm-2 col-form-label">Grade</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="gradeName" name="gradeName" placeholder="Grade Name" th:value="*{gradeName}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gradeSection" class="col-sm-2 col-form-label">Section</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="gradeSection" name="gradeSection"
+                                        th:field="*{gradeSection}">
+                                    <option th:each="grdType: ${grades.gradeSections}"
+                                            th:value="${grdType}"
+                                            th:text="${grdType}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="teacherId" class="col-sm-2 col-form-label">Class Teacher</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="teacherId" name="teacherId"
+                                        th:field="*{teacher.id}">
+                                    <option th:each="tchName: ${teachers}"
+                                            th:value="${tchName.id}"
+                                            th:text="${tchName.firstName}+ '  ' + ${tchName.lastName}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gradeDescription" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="gradeDescription" name="gradeDescription" th:value="*{gradeDescription}" placeholder="Grade Description">
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <label >Subjects :</label>
+                            <ul id="courseUnorderedList">
+                                <li th:each="course, stat: *{courseList}">
+                                    <input type="hidden"
+                                           th:id="'selectedCourseId' + ${stat.index}"
+                                           th:field="*{courseList[__${stat.index}__].id}"/>
+                                    <input type="checkbox"
+                                           th:id="'selectedCourse' + ${stat.index}"
+                                           th:field="*{courseList[__${stat.index}__].selected}"/>
+                                    <label
+                                            th:for="#{'selectedCourse' + ${stat.index}}"
+                                            th:text="${course.courseName}"></label>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <table>
+            <th>s.n</th>
+            <th>Name</th>
+            <th th:each="course, stat: ${grades.courseList}"><b th:text="${course.courseName}"></b></th>
+        </table>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

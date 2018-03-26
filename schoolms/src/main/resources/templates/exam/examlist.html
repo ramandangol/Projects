@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='exam')">
+</head>
+<body>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#addupdateexam"><span class="glyphicon glyphicon-plus-sign">  Add Exam</span></a></li>
+                <li><a data-toggle="tab" href="#examlist"><span class="glyphicon glyphicon-menu-hamburger">  Exam List</span></a></li>
+            </ul>
+
+           <div class="tab-content">
+               <div id="addupdateexam" class="tab-pane fade in active">
+                   <div class="card">
+                       <div class="card">
+                           <div class="card-header">
+                               Add/Update Exam
+                           </div>
+                           <div class="card-body">
+                               <form action="#" th:action="@{/exam/examdetails}" method="post"
+                                     th:object="${exam}">
+                                   <input id="id" name="id" type="hidden" th:value="*{id}">
+                                   <div class="form-group row">
+                                       <label for="examName" class="col-sm-2 col-form-label">Exam Type Name</label>
+                                       <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="examName" name="examName" placeholder="Exam Name here" th:value="*{examName}">
+                                       </div>
+                                   </div>
+                                   <div class="form-group row">
+                                       <label for="description" class="col-sm-2 col-form-label">Description</label>
+                                       <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="description" name="description" th:value="*{description}" placeholder="Exam Description">
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group row">
+                                       <div class="col-sm-10">
+                                           <button type="submit" class="btn btn-success">Submit</button>
+                                       </div>
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div id="examlist" class="tab-pane fade">
+                   <h1>Exam Type List</h1>
+                   <table class="table table-hover table-bordered">
+                       <thead>
+                       <tr>
+                           <th>S/NO.</th>
+                           <th>Exam Name</th>
+                           <th>Description</th>
+                           <th colspan="2">Action</th>
+                       </tr>
+                       </thead>
+                       <tr th:each="exm,iterator : ${exams}">
+                           <td th:text="${iterator.count}">1</td>
+                           <td th:text="${exm.examName}">First Term</td>
+                           <td th:text="${exm.description}">All Exam description</td>
+                           <td>
+                               <a class="btn btn-primary center-block" href="#" th:href="@{${'/exam/examdetails/edit/' + exm.id}}">Edit</a>
+                           </td>
+                           <td>
+                               <button type="button" class="btn btn-danger center-block" href="#" th:data-href="@{${'/exam/examdetails/delete/' + exm.id}}" data-toggle="modal" data-target="#confirm-delete">Delete</button>
+                               <!-- Modal HTML -->
+                               <div id="confirm-delete" class="modal fade" tabindex="-1">
+                                   <div class="modal-dialog modal-confirm">
+                                       <div class="modal-content">
+                                           <div class="modal-header">
+                                               <div class="icon-box">
+                                                   <i class="material-icons">&#xE5CD;</i>
+                                               </div>
+                                               <h4 class="modal-title">Are you sure?</h4>
+                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                           </div>
+                                           <div class="modal-body">
+                                               <p>Do you really want to delete these records? This process cannot be undone.</p>
+                                           </div>
+                                           <div class="modal-footer">
+                                               <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                               <a class="btn btn-danger btn-ok">Delete</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </td>
+                       </tr>
+                   </table>
+               </div>
+
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<script th:inline="javascript">
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+</script>
+</body>
+</html>

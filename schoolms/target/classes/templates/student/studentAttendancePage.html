@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::header (pageTitle='student details')">
+</head>
+<body>
+<div class="wrapper">
+    <!--Sidebar Holder-->
+    <div th:replace="fragments/sidemenu::sidemenu"></div>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <div th:replace="fragments/topmenu::topmenu"></div>
+
+        <div class="container">
+            <form action="#" th:action="@{/student/attendance}"
+                  th:object="${student}" method="post">
+                <div class="row">
+                    <div class="col-sm-2 form-group">
+                        <label>Batch Year</label>
+                        <select class="form-control" id="batchYear" name="batchYear">
+                            <option th:each="btchName: *{batchYears}"
+                                    th:value="${btchName}"
+                                    th:text="${btchName}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Grade</label>
+                        <select class="form-control" id="gradeId" name="gradeId"
+                                th:field="*{grade.id}">
+                            <option th:each="grdName: ${grades}"
+                                    th:value="${grdName.id}"
+                                    th:text="${grdName.gradeName}+ '  ' + ${grdName.gradeSection}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label></label>
+                        <input type="Submit" class="btn btn-lg btn-info form-control" value="Manage Attendance"/>
+                    </div>
+                </div>
+            </form>
+
+            <!--<label>Date :-</label><br/>-->
+
+            <!--<label>Batch :-</label><br/>-->
+            <!--<label>Grade :-</label><br/>-->
+
+            <div >
+                <form action="" th:action="@{/student/saveattendance}" method="post"
+                      th:object="${attendance}">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>S/No.</th>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                        </thead>
+                        <tr th:each="std, stat : *{studentList}">
+                            <td th:text="${stat.count}" >1</td>
+                            <td>
+                                <input type="hidden" th:field="*{studentList[__${stat.index}__].id}"/>
+                                <label th:text="*{studentList[__${stat.index}__].id}"></label>
+                            </td>
+                            <td th:text="${std.firstname} + ' ' + ${std.lastname}">Raman Dangol</td>
+
+                            <td>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="status" name="status"
+                                            th:field="*{studentList[__${stat.index}__].attendanceStatus}">
+                                        <option th:each="attenType: *{statusType}"
+                                                th:value="${attenType}"
+                                                th:text="${attenType}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <center>
+                        <div class="col-sm-4 form-group">
+                            <input type="Submit" class="btn btn-lg btn-success form-control" value="Save Change"/>
+                        </div>
+                    </center>
+                </form>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>
