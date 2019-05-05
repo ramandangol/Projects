@@ -13,13 +13,13 @@ password - raman
 
 #project details tools and framework
 //support in all IDE, I used Intellij IDE
-spring boot web app
-spring and hibernate
-spring security
-mysql as databse
-HTML Template (thymeleaf)
-css
-js
+spring boot web app,
+spring and hibernate,
+spring security,
+mysql as databse,
+HTML Template (thymeleaf),
+css,
+js,
 bootstrap 3
 
 
